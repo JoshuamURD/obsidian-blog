@@ -3,6 +3,6 @@ Working on creating a template to use with Obsidian and Astro.
 
 Features
 - [x] Backlinks
-- [ ] Hover preview
+- [X] Hover preview
 - [ ] Sliding panes
 - [ ] Sidenotes / footnotes 
