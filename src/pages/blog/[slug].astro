@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BacklinksComponent from '../../components/Backlinks.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+function parseMarkdownLink(link: string) {
+  const match = link.match(/\[([^\]]+)\]\(([^)]+)\)/);
+  return match ? { title: match[1], url: match[2] } : null;
+}
+---
+
+<Layout title={entry.data.title}>
+  <article class="prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto dark:prose-invert">
+    <h1 class="text-xl font-bold mb-4">{entry.data.title}</h1>
+    <Content />
+    {entry.data.topics && entry.data.topics.length > 0 && (
+      <div class="mt-8">
+        <h2 class="text-xl font-bold mb-4">Related Topics</h2>
+        <ul>
+          {entry.data.topics.map((topic) => {
+            const parsedLink = parseMarkdownLink(topic);
+            return parsedLink ? (
+              <li class="m-2 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"><a href={parsedLink.url}>{parsedLink.title}</a></li>
+            ) : null;
+          })}
+        </ul>
+      </div>
+    )}
+  </article>
+  <BacklinksComponent currentPage={Astro.url.pathname} />
+</Layout>
