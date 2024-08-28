@@ -18,11 +18,21 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-gray-100 dark:bg-gray-900 h-screen grid grid-rows-[auto_1fr_auto]">
+  <body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex flex-col">
     <Header />
-    <main class="container mx-auto px-4 py-8">
-      <slot />
-    </main>
+    <div class="flex-grow flex justify-center">
+      <div class="max-w-screen-xl w-full px-4 py-8 flex justify-center">
+        <aside class="w-64 hidden lg:block">
+          {/* Left sidenotes component will go here */}
+        </aside>
+        <main class="w-full max-w-[750px] px-4">
+          <slot />
+        </main>
+        <aside class="w-64 hidden lg:block">
+          {/* Right sidenotes component will go here */}
+        </aside>
+      </div>
+    </div>
     <Footer />
     <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
   </body>

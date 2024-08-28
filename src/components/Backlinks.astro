@@ -28,11 +28,11 @@ const backlinks = allPages.filter(page => {
 });
 ---
 
-<div class="backlinks">
-    <h2>Pages that link here:</h2>
     {backlinks.length === 0 ? (
-        <p>No backlinks found.</p>
+        <p>No backlinks to this page.</p>
     ) : (
+<div class="backlinks">
+    <h2 class="text-lg">Pages that link here:</h2>
         <ul>
             {backlinks.map((page) => (
                 <li>
@@ -41,8 +41,8 @@ const backlinks = allPages.filter(page => {
                 </li>
             ))}
         </ul>
-    )}
 </div>
+    )}
 
 <style>
     .backlinks {

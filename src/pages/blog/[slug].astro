@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import BacklinksComponent from '../../components/Backlinks.astro';
+import HoverPreview from '../../components/HoverPreview.svelte';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -20,7 +21,7 @@ function parseMarkdownLink(link: string) {
 ---
 
 <Layout title={entry.data.title}>
-  <article class="prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto dark:prose-invert">
+  <article>
     <h1 class="text-xl font-bold mb-4">{entry.data.title}</h1>
     <Content />
     {entry.data.topics && entry.data.topics.length > 0 && (
@@ -38,4 +39,5 @@ function parseMarkdownLink(link: string) {
     )}
   </article>
   <BacklinksComponent currentPage={Astro.url.pathname} />
+  <HoverPreview client:load />
 </Layout>
