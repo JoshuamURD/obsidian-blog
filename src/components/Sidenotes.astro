@@ -1,0 +1,19 @@
+---
+// Sidenotes.astro
+const { notes, side } = Astro.props;
+---
+
+<div class={`sidenotes-${side}`}>
+  {notes.map((note) => (
+    <div class={`sidenote sidenote-${side}`} id={`sidenote-${note.number}`}>
+      <sup>{note.number}</sup> <span set:html={note.text} />
+    </div>
+  ))}
+</div>
+
+<style>
+  .sidenotes-left, .sidenotes-right {
+    position: relative;
+    height: 100%;
+  }
+</style>
